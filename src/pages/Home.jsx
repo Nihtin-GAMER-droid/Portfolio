@@ -3,36 +3,42 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import AnimatedButton from "../components/AnimatedButton";
+import {sanityClient} from "../lib/sanityClient";
+import { queries } from "../lib/sanity";
 
 export default function Home() {
   const navigate = useNavigate();
   const [featuredProjects, setFeaturedProjects] = useState([]);
 
   useEffect(() => {
+    sanityClient.fetch(queries.featuredProjects).then((data) => {
+      setFeaturedProjects(data)
+    })
+
     // Mock featured projects (would come from Sanity in production)
-    setFeaturedProjects([
-      {
-        id: 1,
-        title: "Autonomous Rover Platform",
-        description: "Self-driving robotic platform with lidar, IMU, and autonomous navigation",
-        technologies: ["ESP32", "ROS", "OpenCV"],
-        image: "🤖",
-      },
-      {
-        id: 2,
-        title: "Computer Vision System",
-        description: "Real-time object detection and tracking using neural networks",
-        technologies: ["Python", "TensorFlow", "OpenCV"],
-        image: "👁️",
-      },
-      {
-        id: 3,
-        title: "IoT Sensor Network",
-        description: "Distributed sensor system for environmental monitoring",
-        technologies: ["LoRaWAN", "MQTT", "Node-RED"],
-        image: "📡",
-      },
-    ]);
+    // setFeaturedProjects([
+    //   {
+    //     id: 1,
+    //     title: "Autonomous Rover Platform",
+    //     description: "Self-driving robotic platform with lidar, IMU, and autonomous navigation",
+    //     technologies: ["ESP32", "ROS", "OpenCV"],
+    //     image: "🤖",
+    //   },
+    //   {
+    //     id: 2,
+    //     title: "Computer Vision System",
+    //     description: "Real-time object detection and tracking using neural networks",
+    //     technologies: ["Python", "TensorFlow", "OpenCV"],
+    //     image: "👁️",
+    //   },
+    //   {
+    //     id: 3,
+    //     title: "IoT Sensor Network",
+    //     description: "Distributed sensor system for environmental monitoring",
+    //     technologies: ["LoRaWAN", "MQTT", "Node-RED"],
+    //     image: "📡",
+    //   },
+    // ]);
   }, []);
 
   return (
@@ -58,7 +64,7 @@ export default function Home() {
         <div className="grid md:grid-cols-3 gap-8">
           {featuredProjects.map((project, idx) => (
             <motion.div
-              key={project.id}
+              key={project._id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.2, duration: 0.6 }}
@@ -70,8 +76,8 @@ export default function Home() {
               <p className="text-gray-400 mb-4">{project.description}</p>
               <div className="flex flex-wrap gap-2">
                 {project.technologies.map((tech) => (
-                  <span key={tech} className="text-xs px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded">
-                    {tech}
+                  <span key={tech.name} className="text-xs px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded">
+                    {tech.name}
                   </span>
                 ))}
               </div>

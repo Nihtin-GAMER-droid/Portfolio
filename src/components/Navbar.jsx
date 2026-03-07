@@ -16,11 +16,11 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-8 text-gray-300">
-          <Link to="/" className="hover:text-cyan-400 transition-colors">Home</Link>
-          <Link to="/projects" className="hover:text-cyan-400 transition-colors">Projects</Link>
-          <Link to="/lab" className="hover:text-cyan-400 transition-colors">Lab</Link>
-          <Link to="/blog" className="hover:text-cyan-400 transition-colors">Blog</Link>
-          <Link to="/contact" className="hover:text-cyan-400 transition-colors">Contact</Link>
+          <Link to="/Portfolio" className="hover:text-cyan-400 transition-colors">Home</Link>
+          <Link to="/Portfolio/projects" className="hover:text-cyan-400 transition-colors">Projects</Link>
+          <Link to="/Portfolio/lab" className="hover:text-cyan-400 transition-colors">Lab</Link>
+          <Link to="/Portfolio/blog" className="hover:text-cyan-400 transition-colors">Blog</Link>
+          <Link to="/Portfolio/contact" className="hover:text-cyan-400 transition-colors">Contact</Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -36,11 +36,11 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden border-t border-cyan-500/20 bg-slate-900/80">
           <div className="flex flex-col gap-4 p-4">
-            <Link to="/" className="hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Home</Link>
-            <Link to="/projects" className="hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Projects</Link>
-            <Link to="/lab" className="hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Lab</Link>
-            <Link to="/blog" className="hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Blog</Link>
-            <Link to="/contact" className="hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Contact</Link>
+            <Link to="/Portfolio" className="hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Home</Link>
+            <Link to="/Portfolio/projects" className="hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Projects</Link>
+            <Link to="/Portfolio/lab" className="hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Lab</Link>
+            <Link to="/Portfolio/blog" className="hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Blog</Link>
+            <Link to="/Portfolio/contact" className="hover:text-cyan-400 transition-colors" onClick={() => setIsOpen(false)}>Contact</Link>
           </div>
         </div>
       )}

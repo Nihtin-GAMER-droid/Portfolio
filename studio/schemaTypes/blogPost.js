@@ -1,4 +1,4 @@
-export const blogPost = {
+const blogPost = {
     name: 'blogPost',
     title: 'Blog Post / Engineering Notes',
     type: 'document',
@@ -127,3 +127,5 @@ export const blogPost = {
         },
     },
 }
+
+export default blogPost

@@ -1,4 +1,4 @@
-export const siteSettings = {
+const siteSettings = {
     name: 'siteSettings',
     title: 'Site Settings',
     type: 'document',
@@ -101,3 +101,5 @@ export const siteSettings = {
         },
     },
 }
+
+export default siteSettings

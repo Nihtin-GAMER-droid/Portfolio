@@ -18,12 +18,12 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/projects/:slug" element={<ProjectDetail />} />
-        <Route path="/lab" element={<Lab />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/Portfolio" element={<Home />} />
+        <Route path="/Portfolio/projects" element={<Projects />} />
+        <Route path="/Portfolio/projects/:slug" element={<ProjectDetail />} />
+        <Route path="/Portfolio/lab" element={<Lab />} />
+        <Route path="/Portfolio/blog" element={<Blog />} />
+        <Route path="/Portfolio/contact" element={<Contact />} />
       </Routes>
 
     </BrowserRouter>

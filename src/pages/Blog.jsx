@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Calendar } from "lucide-react";
+import { sanityClient, queries } from "../lib/sanity";
 
 const CATEGORIES = [
     { name: "all", label: "All Posts" },
@@ -20,78 +21,92 @@ export default function Blog() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Mock blog posts (would be fetched from Sanity)
-        const mockPosts = [
-            {
-                id: 1,
-                title: "Building Real-Time SLAM Systems on Embedded Hardware",
-                slug: "building-slam-systems",
-                excerpt: "Exploring techniques to implement SLAM on resource-constrained microcontrollers using C++ and custom algorithms.",
-                category: "embedded",
-                heroImage: null,
-                publishedDate: "2024-03-01",
-                author: "Nithin",
-                readTime: 8,
-            },
-            {
-                id: 2,
-                title: "Deep Learning on the Edge: TensorFlow Lite for Robotics",
-                slug: "tensorflow-lite-robotics",
-                excerpt: "A comprehensive guide to deploying neural networks on embedded systems with minimal computational overhead.",
-                category: "vision",
-                heroImage: null,
-                publishedDate: "2024-02-25",
-                author: "Nithin",
-                readTime: 12,
-            },
-            {
-                id: 3,
-                title: "Designing Custom PCBs: From Schematic to Manufacturing",
-                slug: "pcb-design-guide",
-                excerpt: "Step-by-step guide on designing PCBs for robotics applications using Altium Designer.",
-                category: "hardware",
-                heroImage: null,
-                publishedDate: "2024-02-18",
-                author: "Nithin",
-                readTime: 15,
-            },
-            {
-                id: 4,
-                title: "ROS Communication Patterns in Distributed Systems",
-                slug: "ros-communication",
-                excerpt: "Understanding publisher-subscriber and service-client patterns for multi-robot systems.",
-                category: "robotics",
-                heroImage: null,
-                publishedDate: "2024-02-10",
-                author: "Nithin",
-                readTime: 10,
-            },
-            {
-                id: 5,
-                title: "Optimizing OpenCV for Real-time Edge Processing",
-                slug: "opencv-optimization",
-                excerpt: "Techniques for reducing latency and memory usage while maintaining accuracy in vision processing.",
-                category: "vision",
-                heroImage: null,
-                publishedDate: "2024-01-30",
-                author: "Nithin",
-                readTime: 11,
-            },
-            {
-                id: 6,
-                title: "Interfacing LIDAR Sensors with Microcontrollers",
-                slug: "lidar-interface",
-                excerpt: "Complete tutorial on connecting and processing LIDAR data using ESP32 and STM32 platforms.",
-                category: "embedded",
-                heroImage: null,
-                publishedDate: "2024-01-20",
-                author: "Nithin",
-                readTime: 9,
-            },
-        ];
+        sanityClient.fetch(queries.allBlogPosts).then((data) => {
+            const posts = (data).map((item) => ({
+                id: item._id,
+                title: item.title,
+                slug: item.slug?.current,
+                excerpt: item.excerpt,
+                category: item.category,
+                heroImage: item.heroImage,
+                publishedDate: item.publishedDate,
+                author: item.author,
+                readTime: item.readTime,
+            }));
 
-        setPosts(mockPosts);
-        setLoading(false);
+            setPosts(posts);
+            setLoading(false);
+        })
+        // Mock blog posts (would be fetched from Sanity)
+        // const mockPosts = [
+        //     {
+        //         id: 1,
+        //         title: "Building Real-Time SLAM Systems on Embedded Hardware",
+        //         slug: "building-slam-systems",
+        //         excerpt: "Exploring techniques to implement SLAM on resource-constrained microcontrollers using C++ and custom algorithms.",
+        //         category: "embedded",
+        //         heroImage: null,
+        //         publishedDate: "2024-03-01",
+        //         author: "Nithin",
+        //         readTime: 8,
+        //     },
+        //     {
+        //         id: 2,
+        //         title: "Deep Learning on the Edge: TensorFlow Lite for Robotics",
+        //         slug: "tensorflow-lite-robotics",
+        //         excerpt: "A comprehensive guide to deploying neural networks on embedded systems with minimal computational overhead.",
+        //         category: "vision",
+        //         heroImage: null,
+        //         publishedDate: "2024-02-25",
+        //         author: "Nithin",
+        //         readTime: 12,
+        //     },
+        //     {
+        //         id: 3,
+        //         title: "Designing Custom PCBs: From Schematic to Manufacturing",
+        //         slug: "pcb-design-guide",
+        //         excerpt: "Step-by-step guide on designing PCBs for robotics applications using Altium Designer.",
+        //         category: "hardware",
+        //         heroImage: null,
+        //         publishedDate: "2024-02-18",
+        //         author: "Nithin",
+        //         readTime: 15,
+        //     },
+        //     {
+        //         id: 4,
+        //         title: "ROS Communication Patterns in Distributed Systems",
+        //         slug: "ros-communication",
+        //         excerpt: "Understanding publisher-subscriber and service-client patterns for multi-robot systems.",
+        //         category: "robotics",
+        //         heroImage: null,
+        //         publishedDate: "2024-02-10",
+        //         author: "Nithin",
+        //         readTime: 10,
+        //     },
+        //     {
+        //         id: 5,
+        //         title: "Optimizing OpenCV for Real-time Edge Processing",
+        //         slug: "opencv-optimization",
+        //         excerpt: "Techniques for reducing latency and memory usage while maintaining accuracy in vision processing.",
+        //         category: "vision",
+        //         heroImage: null,
+        //         publishedDate: "2024-01-30",
+        //         author: "Nithin",
+        //         readTime: 11,
+        //     },
+        //     {
+        //         id: 6,
+        //         title: "Interfacing LIDAR Sensors with Microcontrollers",
+        //         slug: "lidar-interface",
+        //         excerpt: "Complete tutorial on connecting and processing LIDAR data using ESP32 and STM32 platforms.",
+        //         category: "embedded",
+        //         heroImage: null,
+        //         publishedDate: "2024-01-20",
+        //         author: "Nithin",
+        //         readTime: 9,
+        //     },
+        // ];
+
     }, []);
 
     useEffect(() => {
@@ -133,8 +148,8 @@ export default function Blog() {
                             whileTap={{ scale: 0.95 }}
                             onClick={() => setSelectedCategory(cat.name)}
                             className={`px-4 py-2 rounded-lg transition-all ${selectedCategory === cat.name
-                                    ? "bg-cyan-500 text-black shadow-lg shadow-cyan-500/50"
-                                    : "bg-slate-900/50 border-2 border-cyan-500/30 text-cyan-400 hover:border-cyan-400"
+                                ? "bg-cyan-500 text-black shadow-lg shadow-cyan-500/50"
+                                : "bg-slate-900/50 border-2 border-cyan-500/30 text-cyan-400 hover:border-cyan-400"
                                 }`}
                         >
                             {cat.label}

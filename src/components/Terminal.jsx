@@ -43,7 +43,7 @@ export default function Terminal() {
         setKonamiKeys([]);
       }
     };
-
+                
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [konamiKeys, open]);
